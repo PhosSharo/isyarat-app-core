@@ -29,10 +29,7 @@ class HandGestureController extends Controller
             $query->where('hand', $request->hand);
         }
 
-        $perPage = $request->integer('per_page', 50);
-        $gestures = $query->latest()->paginate($perPage);
-
-        return HandGestureResource::collection($gestures);
+        return HandGestureResource::collection($query->latest()->get());
     }
 
     public function show(HandGesture $gesture)

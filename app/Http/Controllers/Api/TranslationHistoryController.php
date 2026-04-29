@@ -25,10 +25,8 @@ class TranslationHistoryController extends Controller
             $query->byDirection($request->direction);
         }
 
-        $perPage = $request->integer('per_page', 50);
-
         return TranslationHistoryResource::collection(
-            $query->latest()->paginate($perPage)
+            $query->latest()->get()
         );
     }
 
@@ -57,5 +55,15 @@ class TranslationHistoryController extends Controller
         $history->load('feedbacks');
 
         return new TranslationHistoryResource($history);
+    }
+
+    public function destroy(TranslationHistory $history)
+    {
+        $history->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Translation history berhasil dihapus',
+        ]);
     }
 }

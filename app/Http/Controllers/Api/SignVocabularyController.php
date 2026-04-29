@@ -34,10 +34,7 @@ class SignVocabularyController extends Controller
             $query->active();
         }
 
-        $perPage = $request->integer('per_page', 50);
-        $vocabularies = $query->orderBy('word')->paginate($perPage);
-
-        return SignVocabularyResource::collection($vocabularies);
+        return SignVocabularyResource::collection($query->orderBy('word')->get());
     }
 
     public function show(SignVocabulary $vocabulary)

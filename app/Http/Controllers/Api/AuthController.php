@@ -91,6 +91,20 @@ class AuthController extends Controller
     }
 
     /**
+     * Delete a user by ID.
+     */
+    public function destroy(User $user): JsonResponse
+    {
+        $user->tokens()->delete();
+        $user->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User berhasil dihapus',
+        ]);
+    }
+
+    /**
      * Consistent user payload (keeps hidden fields out).
      */
     private function userArray(User $user): array

@@ -25,9 +25,7 @@ class TextTranslationController extends Controller
             $query->where('target_language', $request->target_language);
         }
 
-        $perPage = $request->integer('per_page', 50);
-
-        return TextTranslationResource::collection($query->paginate($perPage));
+        return TextTranslationResource::collection($query->get());
     }
 
     public function store(Request $request)

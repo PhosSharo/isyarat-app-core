@@ -221,6 +221,7 @@ Base URL: `http://127.0.0.1:8000/api` (atau URL ngrok + `/api`)
 | `POST` | `/api/login` | Publik | Login, mengembalikan Bearer token |
 | `POST` | `/api/logout` | Bearer | Mencabut token akses saat ini |
 | `GET` | `/api/user` | Bearer | Mendapatkan profil pengguna yang terautentikasi |
+| `DELETE` | `/api/users/{id}` | Publik | Hapus pengguna beserta semua tokennya |
 
 #### Register -- `POST /api/register`
 
@@ -300,6 +301,7 @@ Satuan: Jumlah gestur (buah/item)
 | `GET` | `/api/gestures` | Daftar gestur |
 | `POST` | `/api/gestures` | Buat satu gestur |
 | `POST` | `/api/gestures/bulk` | Import gestur secara massal (untuk pipeline ML) |
+| `POST` | `/api/gestures/detect` | Deteksi gesture bahasa isyarat dari gambar (ML service) |
 | `GET` | `/api/gestures/{id}` | Detail gestur |
 | `DELETE` | `/api/gestures/{id}` | Hapus gestur |
 
@@ -552,6 +554,7 @@ Satuan: Jumlah sesi (sesi/log)
 | `GET` | `/api/history` | Daftar riwayat terjemahan |
 | `POST` | `/api/history` | Catat event terjemahan |
 | `GET` | `/api/history/{id}` | Detail riwayat beserta feedback |
+| `DELETE` | `/api/history/{id}` | Hapus riwayat terjemahan |
 
 Query params: `?user_id=1`, `?session_id=abc`, `?direction=sign_to_text|text_to_sign|speech_to_text|text_to_speech`
 
@@ -660,6 +663,7 @@ Satuan: Jumlah respons (benar/salah)
 | `GET` | `/api/feedbacks` | Daftar feedback |
 | `POST` | `/api/feedbacks` | Kirim feedback |
 | `GET` | `/api/feedbacks/{id}` | Detail feedback |
+| `DELETE` | `/api/feedbacks/{id}` | Hapus feedback |
 
 Query params: `?user_id=1`, `?ai_model_id=1`, `?type=correction|rating|bug_report|suggestion`, `?is_correct=true|false`
 

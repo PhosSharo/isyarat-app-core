@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 // Authentication
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login',    [AuthController::class, 'login']);
+Route::delete('/users/{user}', [AuthController::class, 'destroy']);
 
 // Health check
 Route::get('/health', fn () => response()->json([
@@ -52,7 +53,7 @@ Route::apiResource('translations', TextTranslationController::class)->except(['s
 Route::apiResource('audio', AudioFileController::class)->except(['update']);
 
 // Translation History
-Route::apiResource('history', TranslationHistoryController::class)->only(['index', 'store', 'show']);
+Route::apiResource('history', TranslationHistoryController::class)->only(['index', 'store', 'show', 'destroy']);
 
 // AI/ML Models
 Route::apiResource('models', AiModelController::class);
@@ -60,7 +61,7 @@ Route::post('/models/{model}/upload', [AiModelController::class, 'uploadModel'])
 Route::post('/models/{model}/deploy', [AiModelController::class, 'deploy']);
 
 // User Feedback
-Route::apiResource('feedbacks', UserFeedbackController::class)->only(['index', 'store', 'show']);
+Route::apiResource('feedbacks', UserFeedbackController::class)->only(['index', 'store', 'show', 'destroy']);
 
 /*
 |--------------------------------------------------------------------------

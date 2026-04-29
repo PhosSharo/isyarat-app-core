@@ -26,9 +26,7 @@ class AudioFileController extends Controller
             $query->where('type', $request->type);
         }
 
-        $perPage = $request->integer('per_page', 50);
-
-        return AudioFileResource::collection($query->paginate($perPage));
+        return AudioFileResource::collection($query->get());
     }
 
     public function store(Request $request)

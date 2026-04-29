@@ -485,7 +485,7 @@
                         </tbody>
                     </table>
                 </div>
-                @include('partials.pagination', ['paginator' => $gestures])
+                <div class="pag"><span>{{ $gestures->count() }} total</span></div>
             @endif
         </div>
     </div>
@@ -518,7 +518,7 @@
                         </tbody>
                     </table>
                 </div>
-                @include('partials.pagination', ['paginator' => $users])
+                <div class="pag"><span>{{ $users->count() }} total</span></div>
             @endif
         </div>
     </div>
@@ -552,7 +552,7 @@
                         </tbody>
                     </table>
                 </div>
-                @include('partials.pagination', ['paginator' => $vocabularies])
+                <div class="pag"><span>{{ $vocabularies->count() }} total</span></div>
             @endif
         </div>
     </div>
@@ -584,7 +584,7 @@
                         </tbody>
                     </table>
                 </div>
-                @include('partials.pagination', ['paginator' => $translations])
+                <div class="pag"><span>{{ $translations->count() }} total</span></div>
             @endif
         </div>
     </div>
@@ -618,7 +618,7 @@
                         </tbody>
                     </table>
                 </div>
-                @include('partials.pagination', ['paginator' => $audioFiles])
+                <div class="pag"><span>{{ $audioFiles->count() }} total</span></div>
             @endif
         </div>
     </div>
@@ -651,7 +651,7 @@
                         </tbody>
                     </table>
                 </div>
-                @include('partials.pagination', ['paginator' => $categories])
+                <div class="pag"><span>{{ $categories->count() }} total</span></div>
             @endif
         </div>
     </div>
@@ -692,7 +692,7 @@
                         </tbody>
                     </table>
                 </div>
-                @include('partials.pagination', ['paginator' => $histories])
+                <div class="pag"><span>{{ $histories->count() }} total</span></div>
             @endif
         </div>
     </div>
@@ -730,7 +730,7 @@
                         </tbody>
                     </table>
                 </div>
-                @include('partials.pagination', ['paginator' => $models])
+                <div class="pag"><span>{{ $models->count() }} total</span></div>
             @endif
         </div>
     </div>
@@ -769,7 +769,7 @@
                         </tbody>
                     </table>
                 </div>
-                @include('partials.pagination', ['paginator' => $feedbacks])
+                <div class="pag"><span>{{ $feedbacks->count() }} total</span></div>
             @endif
         </div>
     </div>
@@ -955,6 +955,10 @@
         <div class="ep-body">No body. Header: <code>Authorization: Bearer &lt;token&gt;</code></div>
     </div>
     <div class="ep-card">
+        <div class="ep-head"><span class="method delete">DELETE</span><code>/api/users/{id}</code></div>
+        <div class="ep-body">Hapus pengguna beserta semua tokennya.</div>
+    </div>
+    <div class="ep-card">
         <div class="ep-body">
             <strong>Seeded accounts</strong> (available after <code>php artisan migrate --seed</code>):
             <table class="ep-fields" style="margin-top:8px">
@@ -1133,7 +1137,8 @@ type:            reference</pre>
             </tbody>
         </table>
     </div>
-    <div class="ep-card"><div class="ep-head"><span class="method get">GET</span><code>/api/history/{id}</code></div><div class="ep-body">With nested feedbacks. No update/delete.</div></div>
+    <div class="ep-card"><div class="ep-head"><span class="method get">GET</span><code>/api/history/{id}</code></div><div class="ep-body">With nested feedbacks.</div></div>
+    <div class="ep-card"><div class="ep-head"><span class="method delete">DELETE</span><code>/api/history/{id}</code></div><div class="ep-body">Hapus riwayat terjemahan.</div></div>
 
     {{-- 8. AI Models --}}
     <h3 class="ep-group">8. Model AI/ML &mdash; Tingkat akurasi (%)</h3>
@@ -1219,7 +1224,8 @@ file:   [select .tflite file] (max 100MB)</pre>
             </tbody>
         </table>
     </div>
-    <div class="ep-card"><div class="ep-head"><span class="method get">GET</span><code>/api/feedbacks/{id}</code></div><div class="ep-body">No update/delete.</div></div>
+    <div class="ep-card"><div class="ep-head"><span class="method get">GET</span><code>/api/feedbacks/{id}</code></div><div class="ep-body">Detail feedback.</div></div>
+    <div class="ep-card"><div class="ep-head"><span class="method delete">DELETE</span><code>/api/feedbacks/{id}</code></div><div class="ep-body">Hapus feedback.</div></div>
 
     {{-- Populate Order --}}
     <h3 class="ep-group">Populate Order (Thunder Client)</h3>
@@ -1308,39 +1314,8 @@ function restoreFromHash() {
     if (sub && subNames.indexOf(sub) >= 0) activateSub(sub);
 }
 
-// Detect which sub-tab has a pagination param and auto-activate it
-function restoreFromPagination() {
-    var params = new URLSearchParams(location.search);
-    var map = {
-        'gestures_page':'gestures', 'users_page':'users', 'vocabularies_page':'vocabularies',
-        'translations_page':'translations', 'audio_page':'audio', 'categories_page':'categories',
-        'history_page':'history', 'models_page':'models', 'feedbacks_page':'feedbacks'
-    };
-    // First prioritize tabs with page > 1, then fall back to any tab with a page param
-    var fallback = null;
-    for (var key in map) {
-        var val = params.get(key);
-        if (val) {
-            if (val !== '1') {
-                activateMain('data');
-                activateSub(map[key]);
-                setHash('data', map[key]);
-                return true;
-            }
-            if (!fallback) fallback = map[key];
-        }
-    }
-    if (fallback) {
-        activateMain('data');
-        activateSub(fallback);
-        setHash('data', fallback);
-        return true;
-    }
-    return false;
-}
-
-// On load: pagination params take priority, then hash
-if (!restoreFromPagination()) restoreFromHash();
+// On load: restore tab state from hash
+restoreFromHash();
 </script>
 
 </body>

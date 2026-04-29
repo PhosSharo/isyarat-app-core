@@ -29,9 +29,7 @@ class UserFeedbackController extends Controller
             $query->where('is_correct', $request->boolean('is_correct'));
         }
 
-        $perPage = $request->integer('per_page', 50);
-
-        return UserFeedbackResource::collection($query->latest()->paginate($perPage));
+        return UserFeedbackResource::collection($query->latest()->get());
     }
 
     public function store(Request $request)
@@ -56,5 +54,15 @@ class UserFeedbackController extends Controller
     public function show(UserFeedback $feedback)
     {
         return new UserFeedbackResource($feedback);
+    }
+
+    public function destroy(UserFeedback $feedback)
+    {
+        $feedback->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Feedback berhasil dihapus',
+        ]);
     }
 }
