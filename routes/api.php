@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AiModelController;
 use App\Http\Controllers\Api\AudioFileController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\GestureDetectionController;
 use App\Http\Controllers\Api\HandGestureController;
 use App\Http\Controllers\Api\SignVocabularyController;
 use App\Http\Controllers\Api\TextTranslationController;
@@ -42,6 +43,9 @@ Route::apiResource('vocabularies', SignVocabularyController::class);
 // Hand Gestures
 Route::apiResource('gestures', HandGestureController::class)->except(['update']);
 Route::post('/gestures/bulk', [HandGestureController::class, 'bulkStore']);
+
+// Gesture Detection (Sign Language Recognition)
+Route::post('/gestures/detect', [GestureDetectionController::class, 'detect']);
 
 // Text Translations
 Route::apiResource('translations', TextTranslationController::class)->except(['show']);
