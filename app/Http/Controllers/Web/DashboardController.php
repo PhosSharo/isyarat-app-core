@@ -98,15 +98,15 @@ class DashboardController extends Controller
         ];
 
         // Table data for each of the 9 sections
-        $gestures      = HandGesture::with('vocabulary:id,word')->orderByDesc('created_at')->paginate(20, ['*'], 'gestures_page');
-        $users         = User::withCount(['translationHistories', 'feedbacks'])->orderByDesc('created_at')->paginate(20, ['*'], 'users_page');
-        $vocabularies  = SignVocabulary::with('category:id,name')->withCount('gestures')->orderByDesc('created_at')->paginate(20, ['*'], 'vocabularies_page');
-        $translations  = TextTranslation::with('vocabulary:id,word')->orderByDesc('created_at')->paginate(20, ['*'], 'translations_page');
-        $audioFiles    = AudioFile::with('vocabulary:id,word')->orderByDesc('created_at')->paginate(20, ['*'], 'audio_page');
-        $categories    = VocabularyCategory::withCount('vocabularies')->orderByDesc('created_at')->paginate(20, ['*'], 'categories_page');
-        $histories     = TranslationHistory::orderByDesc('created_at')->paginate(20, ['*'], 'history_page');
-        $models        = AiModel::withCount('feedbacks')->orderByDesc('created_at')->paginate(20, ['*'], 'models_page');
-        $feedbacks     = UserFeedback::orderByDesc('created_at')->paginate(20, ['*'], 'feedbacks_page');
+        $gestures      = HandGesture::with('vocabulary:id,word')->orderBy('id')->paginate(20, ['*'], 'gestures_page');
+        $users         = User::withCount(['translationHistories', 'feedbacks'])->orderBy('id')->paginate(20, ['*'], 'users_page');
+        $vocabularies  = SignVocabulary::with('category:id,name')->withCount('gestures')->orderBy('id')->paginate(20, ['*'], 'vocabularies_page');
+        $translations  = TextTranslation::with('vocabulary:id,word')->orderBy('id')->paginate(20, ['*'], 'translations_page');
+        $audioFiles    = AudioFile::with('vocabulary:id,word')->orderBy('id')->paginate(20, ['*'], 'audio_page');
+        $categories    = VocabularyCategory::withCount('vocabularies')->orderBy('id')->paginate(20, ['*'], 'categories_page');
+        $histories     = TranslationHistory::orderBy('id')->paginate(20, ['*'], 'history_page');
+        $models        = AiModel::withCount('feedbacks')->orderBy('id')->paginate(20, ['*'], 'models_page');
+        $feedbacks     = UserFeedback::orderBy('id')->paginate(20, ['*'], 'feedbacks_page');
 
         return view('dashboard', compact(
             'stats',
